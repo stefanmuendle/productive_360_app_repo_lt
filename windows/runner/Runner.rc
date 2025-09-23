@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "ipa_testing_proj" "\0"
+            VALUE "FileDescription", "productive_360_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "ipa_testing_proj" "\0"
+            VALUE "InternalName", "productive_360_app" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "ipa_testing_proj.exe" "\0"
-            VALUE "ProductName", "ipa_testing_proj" "\0"
+            VALUE "OriginalFilename", "productive_360_app.exe" "\0"
+            VALUE "ProductName", "productive_360_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -1,6 +1,6 @@
 {
-    "name": "ipa_testing_proj",
-    "short_name": "ipa_testing_proj",
+    "name": "productive_360_app",
+    "short_name": "productive_360_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
