@@ -1,5 +1,5 @@
-name: ipa_testing_proj
-description: "A new Flutter project."
+name: productive_360_app
+description: "The App for a productive 360° life."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
