@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'data/notifiers.dart';
 import 'views/widget_tree.dart';
 
-///import 'package:firebase_core/firebase_core.dart';
-///import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 ///import 'package:productive_360_app/data/navigation.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -29,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, value, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          // navigatorKey:
+          // navigatorKey: navigatorKey,
           //     navigatorKey, // Navigator for aad oauth (ms mobile auth)
           title: 'Flutter Demo - main screen???',
           theme: ThemeData(

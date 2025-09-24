@@ -1,17 +1,19 @@
-///import 'package:firebase_auth/firebase_auth.dart';
-library;
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
-// import 'package:productive_360_app/views/pages/dashboard_page.dart';
-// import 'package:productive_360_app/views/pages/login_page.dart';
-// import '../data/notifiers.dart';
-// import 'pages/calendar_page.dart';
-// import 'pages/habits_page.dart';
-// import 'pages/settings_page.dart';
-//import 'widgets/navbar.dart';
+import 'pages/settings_page.dart';
+import 'widgets/navbar.dart';
 
-//List<Widget> pages = [DashboardPage(), CalendarPage(), HabitsPage()];
+import 'package:productive_360_app/views/pages/dashboard_page.dart';
+import 'package:productive_360_app/views/pages/login_page.dart';
+import '../data/notifiers.dart';
+import 'pages/calendar_page.dart';
+import 'pages/habits_page.dart';
+import 'pages/settings_page.dart';
+import 'widgets/navbar.dart';
+
+List<Widget> pages = [DashboardPage(), CalendarPage(), HabitsPage()];
 
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key});
@@ -32,33 +34,33 @@ class WidgetTree extends StatelessWidget {
           ],
         ),
         actions: [
-          // StreamBuilder<User?>(
-          //   stream: FirebaseAuth.instance.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     final user = snapshot.data;
-          //     if (user == null) {
-          //       return TextButton(
-          //         onPressed: () {
-          //           // Navigator.push(
-          //           //   context,
-          //           //   MaterialPageRoute(
-          //           //     builder: (context) => const LoginPage(title: 'Login'),
-          //           //   ),
-          //           // );
-          //         },
-          //         child: Text('Login'),
-          //       );
-          //     } else {
-          //       // return IconButton(
-          //       //   icon: const Icon(Icons.logout, color: Colors.red),
-          //       //   tooltip: 'Logout',
-          //       //   onPressed: () async {
-          //       //     await FirebaseAuth.instance.signOut();
-          //       //   },
-          //       // );
-          //     }
-          //   },
-          // ),
+          StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              final user = snapshot.data;
+              if (user == null) {
+                return TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(title: 'Login'),
+                      ),
+                    );
+                  },
+                  child: Text('Login'),
+                );
+              } else {
+                return IconButton(
+                  icon: const Icon(Icons.logout, color: Colors.red),
+                  tooltip: 'Logout',
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                  },
+                );
+              }
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.star, color: Colors.amber),
             onPressed: () {
@@ -68,21 +70,21 @@ class WidgetTree extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.grey),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const SettingsPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
             },
           ),
         ],
       ),
-      // body: ValueListenableBuilder(
-      //   valueListenable: selectedPageNotifier,
-      //   builder: (context, selectedPage, child) {
-      //     return pages.elementAt(selectedPage);
-      //   },
-      // ),
-      //bottomNavigationBar: const NavbarWidget(),
+      body: ValueListenableBuilder(
+        valueListenable: selectedPageNotifier,
+        builder: (context, selectedPage, child) {
+          return pages.elementAt(selectedPage);
+        },
+      ),
+      bottomNavigationBar: const NavbarWidget(),
     );
   }
 }

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "664321133517",
+    "firebase_url": "https://productive360-dbase-default-rtdb.firebaseio.com",
+    "project_id": "productive360-dbase",
+    "storage_bucket": "productive360-dbase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664321133517:android:4ee99430db84542c635284",
+        "android_client_info": {
+          "package_name": "com.example.productive_360_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAArqRVKLI-Ygvj9eO6T34EC9Vixmm8YSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664321133517:android:111072a798446adf635284",
+        "android_client_info": {
+          "package_name": "com.example.testauthms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAArqRVKLI-Ygvj9eO6T34EC9Vixmm8YSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
