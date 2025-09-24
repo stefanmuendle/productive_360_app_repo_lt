@@ -1,7 +1,10 @@
 name: iOS-ipa-build
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:   # still allow manual triggering
+  push:                # run on every push
+    branches:
+      - main           # change this if your default branch has a different name
 
 jobs:
   build-ios:
@@ -14,8 +17,8 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
+
       - run: flutter pub get
-      
 
       - run: pod repo update
         working-directory: ios
