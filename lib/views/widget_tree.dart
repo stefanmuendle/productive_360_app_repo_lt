@@ -1,13 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-
-import 'pages/settings_page.dart';
-import 'widgets/navbar.dart';
-
+import 'package:productive_360_app/data/notifiers.dart';
 import 'package:productive_360_app/views/pages/dashboard_page.dart';
 import 'package:productive_360_app/views/pages/login_page.dart';
-import '../data/notifiers.dart';
 import 'pages/calendar_page.dart';
 import 'pages/habits_page.dart';
 import 'pages/settings_page.dart';
