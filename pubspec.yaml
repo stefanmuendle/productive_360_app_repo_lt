@@ -43,10 +43,22 @@ dependencies:
   ########################
 
   ####unapproved todo:
+  #cloud_firestore: ^6.0.0
+  intl: ^0.20.2
+  calendar_view: ^1.4.0
+  http: ^1.5.0
+  #flutter_secure_storage: ^9.2.4
   icons_plus: ^5.0.0
+  syncfusion_flutter_calendar: ^30.2.6
+  kalender: ^0.12.0
+  infinite_calendar_view: ^2.7.0
+  table_calendar: ^3.2.0
   aad_oauth: ^1.0.1
   
-
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+ 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

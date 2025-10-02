@@ -4,7 +4,7 @@ import 'package:productive_360_app/data/notifiers.dart';
 import 'package:productive_360_app/models/habit.dart';
 import 'package:productive_360_app/views/widgets/ms_login.dart';
 
-//import '../../data/dal/db_access.dart';
+import '../../data/dal/db_access.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

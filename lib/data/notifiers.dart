@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/habit_collection.dart';
+import 'package:productive_360_app/models/habit_collection.dart';
 
 ValueNotifier<int> selectedPageNotifier = ValueNotifier<int>(0);
 ValueNotifier<bool> isDarkModeNotifier = ValueNotifier<bool>(false);

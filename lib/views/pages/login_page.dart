@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:productive_360_app/data/dal/db_access.dart' as db_access;
+import 'package:productive_360_app/data/dal/db_access.dart' as db_access;
 import 'package:productive_360_app/data/notifiers.dart';
-//import 'package:productive_360_app/models/habit_collection.dart';
+import 'package:productive_360_app/models/habit_collection.dart';
 
 import '../widget_tree.dart';
 

@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
@@ -46,7 +49,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '664321133517',
     projectId: 'productive360-dbase',
     authDomain: 'productive360-dbase.firebaseapp.com',
-    databaseURL: 'https://productive360-dbase-default-rtdb.firebaseio.com',
     storageBucket: 'productive360-dbase.firebasestorage.app',
     measurementId: 'G-VCH0NTHV10',
   );
@@ -56,7 +58,6 @@ class DefaultFirebaseOptions {
     appId: '1:664321133517:android:4ee99430db84542c635284',
     messagingSenderId: '664321133517',
     projectId: 'productive360-dbase',
-    databaseURL: 'https://productive360-dbase-default-rtdb.firebaseio.com',
     storageBucket: 'productive360-dbase.firebasestorage.app',
   );
 
@@ -65,17 +66,6 @@ class DefaultFirebaseOptions {
     appId: '1:664321133517:ios:66aceac9be0bf48f635284',
     messagingSenderId: '664321133517',
     projectId: 'productive360-dbase',
-    databaseURL: 'https://productive360-dbase-default-rtdb.firebaseio.com',
-    storageBucket: 'productive360-dbase.firebasestorage.app',
-    iosBundleId: 'com.example.productive360App',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAM5BuIkqGBt_0b1aeIyrgmwsA0IddrHEg',
-    appId: '1:664321133517:ios:66aceac9be0bf48f635284',
-    messagingSenderId: '664321133517',
-    projectId: 'productive360-dbase',
-    databaseURL: 'https://productive360-dbase-default-rtdb.firebaseio.com',
     storageBucket: 'productive360-dbase.firebasestorage.app',
     iosBundleId: 'com.example.productive360App',
   );
@@ -86,8 +76,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '664321133517',
     projectId: 'productive360-dbase',
     authDomain: 'productive360-dbase.firebaseapp.com',
-    databaseURL: 'https://productive360-dbase-default-rtdb.firebaseio.com',
     storageBucket: 'productive360-dbase.firebasestorage.app',
     measurementId: 'G-0K5JG8XDWE',
   );
+
 }
