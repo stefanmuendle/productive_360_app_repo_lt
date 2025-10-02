@@ -29,8 +29,8 @@ class _MyAppState extends State<MyApp> {
       builder: (context, value, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          // navigatorKey:
-          //     navigatorKey, // Navigator for aad oauth (ms mobile auth)
+          navigatorKey:
+              navigatorKey, // Navigator for aad oauth (ms mobile auth)
           title: 'Flutter Demo - main screen???',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(

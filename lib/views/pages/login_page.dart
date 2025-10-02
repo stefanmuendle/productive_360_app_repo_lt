@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:productive_360_app/data/dal/db_access.dart' as db_access;
+//import 'package:productive_360_app/data/dal/db_access.dart' as db_access;
 import 'package:productive_360_app/data/notifiers.dart';
-import 'package:productive_360_app/models/habit_collection.dart';
+//import 'package:productive_360_app/models/habit_collection.dart';
 
 import '../widget_tree.dart';
 
@@ -188,16 +188,16 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
 
-      try {
-        final habits = await db_access.loadHabits();
-        HabitCollection preloadHabits = HabitCollection();
-        preloadHabits.habits.addAll(habits);
-        habitCollectionNotifier.value = preloadHabits;
-        preloadedHabitsNotifier.value = true;
-      } catch (e) {
-        print("Error preloading habits: $e");
-        // Optionally show error
-      }
+      // try {
+      //   final habits = await db_access.loadHabits();
+      //   HabitCollection preloadHabits = HabitCollection();
+      //   preloadHabits.habits.addAll(habits);
+      //   habitCollectionNotifier.value = preloadHabits;
+      //   preloadedHabitsNotifier.value = true;
+      // } catch (e) {
+      //   print("Error preloading habits: $e");
+      //   // Optionally show error
+      // }
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message ?? 'An error occurred';
