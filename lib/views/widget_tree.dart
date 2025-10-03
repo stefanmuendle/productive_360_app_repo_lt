@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:productive_360_app/data/notifiers.dart';
 import 'package:productive_360_app/views/pages/dashboard_page.dart';
@@ -13,8 +14,14 @@ List<Widget> pages = [DashboardPage(), CalendarPage(), HabitsPage()];
 class WidgetTree extends StatelessWidget {
   const WidgetTree({super.key});
 
+  bool _isWideScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width > 600;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isWebOrTablet = kIsWeb || _isWideScreen(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -29,6 +36,7 @@ class WidgetTree extends StatelessWidget {
           ],
         ),
         actions: [
+          if (isWebOrTablet) NavbarWidget(inAppBar: true), // <-- Add here!
           StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
@@ -79,7 +87,7 @@ class WidgetTree extends StatelessWidget {
           return pages.elementAt(selectedPage);
         },
       ),
-      bottomNavigationBar: const NavbarWidget(),
+      bottomNavigationBar: isWebOrTablet ? null : const NavbarWidget(),
     );
   }
 }

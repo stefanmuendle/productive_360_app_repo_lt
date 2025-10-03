@@ -11,3 +11,5 @@ ValueNotifier<bool> preloadedHabitsNotifier = ValueNotifier<bool>(false);
 //     ValueNotifier<HabitCollection>(HabitCollection());
 
 ValueNotifier<bool> habitsChangedNotifier = ValueNotifier<bool>(false);
+
+ValueNotifier<String> tmp_graph_token_notifier = ValueNotifier<String>("");

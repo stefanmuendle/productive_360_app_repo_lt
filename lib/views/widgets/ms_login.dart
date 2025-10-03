@@ -24,38 +24,54 @@ class _MicrosoftSignInButtonState extends State<MicrosoftSignInButton> {
     final token = _authService.getMicrosoftAccessToken();
     if (token == null) return;
 
-    final url = Uri.parse(
-      "https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=2025-09-09T16:36:39.866Z&enddatetime=2025-09-16T16:36:39.866Z",
-    );
-    final response = await http.get(
-      url,
+    // Fetch user profile to get email
+    final profileUrl = Uri.parse("https://graph.microsoft.com/v1.0/me");
+    final profileResponse = await http.get(
+      profileUrl,
       headers: {'Authorization': 'Bearer $token'},
     );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final events = data['value'] as List<dynamic>?;
-
-      if (events != null && events.isNotEmpty) {
-        for (final event in events) {
-          final eventInfo = {
-            "title": event['subject'],
-            "start": event['start']?['dateTime'],
-            "end": event['end']?['dateTime'],
-            "category": event['categories']?.join(', '),
-            "isAllDay": event['isAllDay'],
-            "description": event['bodyPreview'],
-            "location": event['location']?['displayName'],
-            "organizer": event['organizer']?['emailAddress']?['name'],
-          };
-          //print(JsonEncoder.withIndent('  ').convert(eventInfo));
-        }
-      } else {
-        print("No events found in the given timespan.");
-      }
+    if (profileResponse.statusCode == 200) {
+      final profileData = jsonDecode(profileResponse.body);
+      setState(() {
+        _userEmail = profileData['mail'] ?? profileData['userPrincipalName'];
+      });
     } else {
-      print("❌ Failed to fetch calendar events: ${response.body}");
+      print("❌ Failed to fetch user profile: ${profileResponse.body}");
     }
+
+    // final url = Uri.parse(
+    //   "https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=2025-09-09T16:36:39.866Z&enddatetime=2025-09-16T16:36:39.866Z",
+    // );
+    // final response = await http.get(
+    //   url,
+    //   headers: {'Authorization': 'Bearer $token'},
+    // );
+
+    // if (response.statusCode == 200) {
+    //   final data = jsonDecode(response.body);
+    //   final events = data['value'] as List<dynamic>?;
+
+    //   if (events != null && events.isNotEmpty) {
+    //     for (final event in events) {
+    //       final eventInfo = {
+    //         "title": event['subject'],
+    //         "start": event['start']?['dateTime'],
+    //         "end": event['end']?['dateTime'],
+    //         "category": event['categories']?.join(', '),
+    //         "isAllDay": event['isAllDay'],
+    //         "description": event['bodyPreview'],
+    //         "location": event['location']?['displayName'],
+    //         "organizer": event['organizer']?['emailAddress']?['name'],
+    //       };
+    //       //print(JsonEncoder.withIndent('  ').convert(eventInfo));
+    //     }
+    //   } else {
+    //     print("No events found in the given timespan.");
+    //   }
+    // } else {
+    //   print("❌ Failed to fetch calendar events: ${response.body}");
+    // }
   }
 
   Future<void> _signIn() async {
@@ -82,6 +98,7 @@ class _MicrosoftSignInButtonState extends State<MicrosoftSignInButton> {
       if (token != null) {
         setState(() => _isSignedIn = true);
         isLoggedInNotifier.value = true;
+        tmp_graph_token_notifier.value = token;
         await _fetchUserEmail();
       }
     } catch (e, st) {
