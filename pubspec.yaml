@@ -54,6 +54,8 @@ dependencies:
   infinite_calendar_view: ^2.7.0
   table_calendar: ^3.2.0
   aad_oauth: ^1.0.1
+
+  timezone: ^0.10.0
   
 dev_dependencies:
   flutter_test:

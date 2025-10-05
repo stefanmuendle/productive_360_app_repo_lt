@@ -4,6 +4,10 @@ import 'package:productive_360_app/models/habit_collection.dart';
 ValueNotifier<int> selectedPageNotifier = ValueNotifier<int>(0);
 ValueNotifier<bool> isDarkModeNotifier = ValueNotifier<bool>(false);
 
+final selectedTimezoneNotifier = ValueNotifier<String>(
+  DateTime.now().timeZoneName,
+);
+
 ValueNotifier<bool> isLoggedInNotifier = ValueNotifier<bool>(false);
 
 ValueNotifier<bool> preloadedHabitsNotifier = ValueNotifier<bool>(false);

@@ -2,24 +2,20 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:productive_360_app/data/notifiers.dart';
 import 'token_repository.dart';
 import 'package:infinite_calendar_view/infinite_calendar_view.dart';
 
 class MsGraphService {
-  final MsTokenRepository _tokenRepository;
-
-  MsGraphService(this._tokenRepository);
-
   static const String _graphBaseUrl = "https://graph.microsoft.com/v1.0";
 
   Future<Map<String, String>> _buildHeaders() async {
-    final accessToken = await _tokenRepository.getValidAccessToken();
-    if (accessToken == null) {
-      throw Exception("No valid Microsoft access token available.");
-    }
+    final accessToken = tmp_graph_token_notifier.value;
     return {
       "Authorization": "Bearer $accessToken",
       "Content-Type": "application/json",
+      "Prefer":
+          'outlook.timezone="${selectedTimezoneNotifier.value}"', // 👈 specify your desired timezone
     };
   }
 
@@ -96,19 +92,29 @@ class MsGraphService {
 
   /// Parse Microsoft Graph API event JSON into Event object
   Event _parseGraphEvent(Map<String, dynamic> json) {
-    final start = DateTime.parse(json['start']['dateTime']).toLocal();
-    final end = DateTime.parse(json['end']['dateTime']).toLocal();
+    // Fetch timezone info from Graph
+    final startZone = json['start']?['timeZone'] ?? 'unknown';
+    final endZone = json['end']?['timeZone'] ?? 'unknown';
+
+    final rawStart = DateTime.parse(json['start']['dateTime']);
+    final rawEnd = DateTime.parse(json['end']['dateTime']);
+
+    print(
+      "📅 Event from Graph: ${json['subject']} | "
+      "Start: $rawStart ($startZone) | End: $rawEnd ($endZone) | "
+      "AllDay: ${json['isAllDay']}",
+    );
+
+    // Convert to local for display
+    final start = rawStart.toLocal();
+    final end = rawEnd.toLocal();
 
     return Event(
       startTime: start,
       endTime: end,
-      //isFullDay: json['isAllDay'] ?? false,
       title: json['subject'] ?? "Untitled",
       description: json['bodyPreview'] ?? "",
-      //data: json, // keep raw graph event if you need it later
-      //eventType: defaultType,
       color: Colors.blue,
-      //textColor: Colors.white,
     );
   }
 }
