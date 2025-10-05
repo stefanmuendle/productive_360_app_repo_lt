@@ -38,6 +38,8 @@ dependencies:
   firebase_database: ^12.0.0
   firebase_auth: ^6.0.0
 
+  
+
   ##### unapproved todo:
   ###cloud_firestore: ^6.0.0
   ########################
