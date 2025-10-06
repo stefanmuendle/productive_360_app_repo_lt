@@ -1,45 +1,74 @@
 name: iOS-ipa-build
 
 on:
-  workflow_dispatch:   # still allow manual triggering
-  push:                # run on every push
+  workflow_dispatch:
+  push:
     branches:
-      - main           # change this if your default branch has a different name
+      - main
 
 jobs:
   build-ios:
-    name: 🎉 iOS Build
+    name: 🎉 iOS Build (Signed)
     runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
 
+    steps:
+      # ✅ Step 1: Checkout project
+      - uses: actions/checkout@v4
+
+      # ✅ Step 2: Setup Flutter
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
 
+      # ✅ Step 3: Decode and install Apple signing files
+      - name: Decode and install signing certificates
+        run: |
+          echo "$APPLE_CERT_P12_BASE64" | base64 --decode > signing_cert.p12
+          echo "$APPLE_PROVISION_PROFILE_BASE64" | base64 --decode > profile.mobileprovision
+
+          # Create and use a temporary keychain
+          security create-keychain -p "buildkeychain" build.keychain
+          security import signing_cert.p12 -k ~/Library/Keychains/build.keychain -P "$APPLE_CERT_P12_PASSWORD" -T /usr/bin/codesign
+          security list-keychains -s ~/Library/Keychains/build.keychain
+          security default-keychain -s ~/Library/Keychains/build.keychain
+          security unlock-keychain -p "buildkeychain" ~/Library/Keychains/build.keychain
+          security set-keychain-settings -t 3600 -u ~/Library/Keychains/build.keychain
+
+          # Add provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+
+      # ✅ Step 4: Get Flutter dependencies
       - run: flutter pub get
 
+      # ✅ Step 5: Pod repo update (iOS deps)
       - run: pod repo update
         working-directory: ios
 
-      - run: flutter build ios --release --no-codesign
+      # ✅ Step 6: Build and sign IPA
+      - name: Build and Sign IPA
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          flutter build ios --release --no-codesign
+          
+          xcodebuild -workspace ios/Runner.xcworkspace \
+                     -scheme Runner \
+                     -sdk iphoneos \
+                     -configuration Release \
+                     DEVELOPMENT_TEAM=$APPLE_TEAM_ID \
+                     CODE_SIGN_IDENTITY="Apple Development" \
+                     archive -archivePath build/Runner.xcarchive
 
-      - run: mkdir Payload
-        working-directory: build/ios/iphoneos
+          xcodebuild -exportArchive \
+                     -archivePath build/Runner.xcarchive \
+                     -exportOptionsPlist ios/Runner/ExportOptions.plist \
+                     -exportPath build/ios/ipa
 
-      - run: mv Runner.app/ Payload
-        working-directory: build/ios/iphoneos
-
-      - name: Zip output
-        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
-        working-directory: build/ios/iphoneos
-
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+      # ✅ Step 7: Upload final IPA
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.0
-          overwrite: true
-          body: "This is first release"
+          name: iOS-IPA
+          path: build/ios/ipa/*.ipa
