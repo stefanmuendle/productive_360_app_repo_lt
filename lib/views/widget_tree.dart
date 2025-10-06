@@ -37,33 +37,6 @@ class WidgetTree extends StatelessWidget {
         ),
         actions: [
           if (isWebOrTablet) NavbarWidget(inAppBar: true), // <-- Add here!
-          StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              final user = snapshot.data;
-              if (user == null) {
-                return TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(title: 'Login'),
-                      ),
-                    );
-                  },
-                  child: Text('Login'),
-                );
-              } else {
-                return IconButton(
-                  icon: const Icon(Icons.logout, color: Colors.red),
-                  tooltip: 'Logout',
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                  },
-                );
-              }
-            },
-          ),
           IconButton(
             icon: const Icon(Icons.star, color: Colors.amber),
             onPressed: () {
