@@ -12,11 +12,11 @@ jobs:
     runs-on: macos-latest
 
     env:
-      BUILD_CERTIFICATE_BASE64: ${{ secrets.APPLE_CERT_P12_BASE64 }}
+      BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
       P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
       BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
       KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-      DEVELOPMENT_TEAM: ${{ secrets.DEVELOPMENT_TEAM }} # Optional if using automatic provisioning
+      DEVELOPMENT_TEAM: ${{ secrets.APPLE_TEAM_ID }} # Optional if using automatic provisioning
 
     steps:
       - name: 🧩 Checkout repository
